@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+
+$paths = [
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../autoload.php'
+];
+foreach ($paths as $path) {
+    if (is_file($path)) {
+        require_once $path;
+        break;
+    }
+}
+
+use Nogrod\XMLClient\Command\Generate;
+use Symfony\Component\Console\Application;
+
+error_reporting(error_reporting() | E_ALL);
+$cli = new Application('Convert WSDL/XSD definitions to PHP classes Command Line Interface', "1.0");
+$cli->setCatchExceptions(true);
+$cli->add(new Generate());
+$cli->run();
+
