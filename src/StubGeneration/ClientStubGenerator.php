@@ -7,13 +7,13 @@ use GoetasWebservices\XML\WSDLReader\Wsdl\Message\Part;
 use GoetasWebservices\XML\WSDLReader\Wsdl\PortType;
 use GoetasWebservices\Xsd\XsdToPhp\Naming\NamingStrategy;
 use GoetasWebservices\Xsd\XsdToPhp\Php\PhpConverter;
-use Nogrod\XMLClient\Client;
 use Nogrod\XMLClient\StubGeneration\Tag\ParamTag;
 use Laminas\Code\Generator\ClassGenerator;
 use Laminas\Code\Generator\DocBlock\Tag\ReturnTag;
 use Laminas\Code\Generator\DocBlockGenerator;
 use Laminas\Code\Generator\MethodGenerator;
 use Laminas\Code\Generator\ParameterGenerator;
+use Nogrod\XMLClientRuntime\Client;
 
 class ClientStubGenerator
 {
