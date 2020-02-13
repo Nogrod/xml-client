@@ -8,7 +8,8 @@
   ],
   "license": "MIT",
   "repositories": [
-    { "type": "vcs", "url": "https://github.com/Nogrod/xsd2php.git" }
+    { "type": "vcs", "url": "https://github.com/Nogrod/xsd2php.git" },
+    { "type": "vcs", "url": "https://github.com/Nogrod/soap-reader.git" }
   ],
   "require": {
     "php": "^7.2",
@@ -16,7 +17,7 @@
     "symfony/config": "^4.0|^5.0",
     "symfony/dependency-injection": "^4.0|^5.0",
     "symfony/expression-language": "^4.0|^5.0",
-    "goetas-webservices/soap-reader": "^0.3",
+    "goetas-webservices/soap-reader": "dev-master",
     "goetas-webservices/xsd2php": "dev-master"
   },
   "require-dev": {
