@@ -2,7 +2,7 @@
 
 namespace Nogrod\XMLClient\StubGeneration;
 
-use Doctrine\Common\Inflector\Inflector;
+use Doctrine\Inflector\InflectorFactory;
 use GoetasWebservices\XML\WSDLReader\Wsdl\Message\Part;
 use GoetasWebservices\XML\WSDLReader\Wsdl\PortType;
 use GoetasWebservices\Xsd\XsdToPhp\Naming\NamingStrategy;
@@ -26,11 +26,14 @@ class ClientStubGenerator
      * @var PhpConverter
      */
     private $phpConverter;
+	
+	private $inflector;
 
     public function __construct(PhpConverter $phpConverter, NamingStrategy $namingStrategy)
     {
         $this->namingStrategy = $namingStrategy;
         $this->phpConverter = $phpConverter;
+		$this->inflector = InflectorFactory::create()->build();
     }
 
     public static function addJmsMethod(ClassGenerator $classGen, array $jmsPaths)
@@ -77,7 +80,7 @@ class ClientStubGenerator
         foreach ($ports as $port) {
             $classGen = new ClassGenerator();
             if ($this->visitPortType($classGen, $port) !== false) {
-                $classGen->setName(Inflector::classify(preg_replace('/interface$|serviceport(type)?$/i', '', $port->getName())) . 'BaseClient');
+                $classGen->setName($this->inflector->classify(preg_replace('/interface$|serviceport(type)?$/i', '', $port->getName())) . 'BaseClient');
                 $namespaces = $this->phpConverter->getNamespaces();
                 $classGen->setNamespaceName($namespaces[$port->getDefinition()->getTargetNamespace()] . "\\Client");
                 $classGen->setExtendedClass(Client::class);
@@ -109,7 +112,7 @@ class ClientStubGenerator
 
     private function visitOperation(PortType\Operation $operation, ClassGenerator $classGen)
     {
-        $methodName = Inflector::camelize($operation->getName());
+        $methodName = $this->inflector->camelize($operation->getName());
         $method = new MethodGenerator($methodName);
         $returnType = $this->getOperationReturnType($operation);
         $method->setReturnType($returnType);
