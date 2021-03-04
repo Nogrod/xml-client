@@ -104,10 +104,12 @@ class Generate extends Command
             $writer->setLogger($logger);
             $writer->write($jmsItems);
 
-            $writer = $debugContainer->get('goetas_webservices.xsd2php.writer.sabre');
-            $writer->setLogger($logger);
-            $writer->setConfig($config);
-            $writer->write($jmsItems);
+            if (!$noSabre) {
+                $writer = $debugContainer->get('goetas_webservices.xsd2php.writer.sabre');
+                $writer->setLogger($logger);
+                $writer->setConfig($config);
+                $writer->write($jmsItems);
+            }
 
             $converter = $debugContainer->get('goetas_webservices.xsd2php.converter.php');
             $converter->setLogger($logger);
