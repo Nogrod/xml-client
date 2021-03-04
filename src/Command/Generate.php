@@ -24,7 +24,7 @@ class Generate extends Command
         $this->setName('generate');
         $this->setDescription("Convert create all the necessary PHP classes for a XML client");
         $this->setDefinition([
-            new InputArgument('config', InputArgument::REQUIRED, 'Config file location', 'config.yaml'),
+            new InputArgument('config', InputArgument::OPTIONAL, 'Config file location', 'config.yaml'),
             new InputOption('no-sabre', null, InputOption::VALUE_OPTIONAL, 'Use Sabre?',false)
         ]);
     }
