@@ -74,7 +74,7 @@ class ClientStubGenerator
      * @param string $classname
      * @return ClassGenerator[]
      */
-    public function generate(array $ports, array $jmsPaths, string $classname)
+    public function generate(array $ports, array $jmsPaths, string $classname, bool $noSabre = false)
     {
         $classes = [];
         foreach ($ports as $port) {
@@ -85,7 +85,7 @@ class ClientStubGenerator
                 $classGen->setNamespaceName($namespaces[$port->getDefinition()->getTargetNamespace()] . "\\Client");
                 $classGen->setExtendedClass(Client::class);
                 self::addJmsMethod($classGen, $jmsPaths);
-                self::addSabreMethod($classGen, $classname);
+                if (!$noSabre) self::addSabreMethod($classGen, $classname);
                 $classes[] = $classGen;
             }
         }

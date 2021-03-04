@@ -102,7 +102,7 @@ class Generate extends Command
 
             $writer = $debugContainer->get('goetas_webservices.xsd2php.writer.jms');
             $writer->setLogger($logger);
-            $writer->write($jmsItems);
+            $writer->write($jmsItems, $noSabre);
 
             if (!$noSabre) {
                 $writer = $debugContainer->get('goetas_webservices.xsd2php.writer.sabre');
@@ -124,7 +124,7 @@ class Generate extends Command
 
             $writer = $debugContainer->get('goetas_webservices.xsd2php.writer.php');
             $writer->setLogger($logger);
-            $writer->write($items);
+            $writer->write($items, $noSabre);
 
             $destinations_php = $config['destinations_php'];
             $jmsPaths = $config['destinations_jms'];
@@ -134,7 +134,7 @@ class Generate extends Command
                  * @var $clientStubGenerator ClientStubGenerator
                  */
                 $clientStubGenerator = $debugContainer->get('nogrod.xml_client.stub.client_generator');
-                $classDefinitions = $clientStubGenerator->generate($portTypes, $jmsPaths, $classname);
+                $classDefinitions = $clientStubGenerator->generate($portTypes, $jmsPaths, $classname, $noSabre);
                 $classWriter->write($classDefinitions);
             } else {
                 $classGen = new ClassGenerator();
