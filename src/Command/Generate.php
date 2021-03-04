@@ -12,6 +12,7 @@ use Nogrod\XMLClientRuntime\Client;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -23,7 +24,8 @@ class Generate extends Command
         $this->setName('generate');
         $this->setDescription("Convert create all the necessary PHP classes for a XML client");
         $this->setDefinition([
-            new InputArgument('config', InputArgument::OPTIONAL, 'Config file location', 'config.yaml'),
+            new InputArgument('config', InputArgument::REQUIRED, 'Config file location', 'config.yaml'),
+            new InputOption('no-sabre', null, InputOption::VALUE_OPTIONAL, 'Use Sabre?',false)
         ]);
     }
 
@@ -37,6 +39,7 @@ class Generate extends Command
     {
         $logger = new ConsoleLogger($output);
         $configArg = $input->getArgument('config');
+        $noSabre = ($input->getOption('no-sabre') !== false);
         if (is_dir($configArg)) {
             $configs = glob($configArg.DIRECTORY_SEPARATOR.'*.yaml');
         } else {
@@ -137,7 +140,7 @@ class Generate extends Command
                 $classGen->setNamespaceName(array_key_first($jmsPaths) . "\\Client");
                 $classGen->setExtendedClass(Client::class);
                 ClientStubGenerator::addJmsMethod($classGen, $jmsPaths);
-                ClientStubGenerator::addSabreMethod($classGen, $classname);
+                if (!$noSabre) ClientStubGenerator::addSabreMethod($classGen, $classname);
                 $classWriter->write([$classGen]);
             }
         }
