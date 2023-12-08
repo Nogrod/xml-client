@@ -14,7 +14,7 @@
   ],
   "require": {
     "php": "^7.4|^8.0",
-    "nogrod/xml-client-runtime": "^0.1",
+    "nogrod/xml-client-runtime": "^0.2",
     "symfony/config": "^4.0|^5.0",
     "symfony/dependency-injection": "^4.0|^5.0",
     "symfony/expression-language": "^4.0|^5.0",
@@ -32,5 +32,10 @@
   },
   "bin": [
     "bin/xml-client"
-  ]
+  ],
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": true
+    }
+  }
 }
