@@ -15,9 +15,9 @@
   "require": {
     "php": "^7.4|^8.0",
     "nogrod/xml-client-runtime": "^0.2",
-    "symfony/config": "^4.0|^5.0",
-    "symfony/dependency-injection": "^4.0|^5.0",
-    "symfony/expression-language": "^4.0|^5.0",
+    "symfony/config": "^4.0|^5.0|^6.0",
+    "symfony/dependency-injection": "^4.0|^5.0|^6.0",
+    "symfony/expression-language": "^4.0|^5.0|^6.0",
     "goetas-webservices/soap-reader": "dev-master",
     "goetas-webservices/wsdl-reader": "dev-master",
     "goetas-webservices/xsd2php": "dev-master"
