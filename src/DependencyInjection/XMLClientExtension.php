@@ -63,7 +63,7 @@ class XMLClientExtension extends Extension implements PrependExtensionInterface
         return strtr($ns, '/', '\\');
     }
 
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'xml_client';
     }
