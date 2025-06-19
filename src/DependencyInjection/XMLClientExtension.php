@@ -58,7 +58,7 @@ class XMLClientExtension extends Extension implements PrependExtensionInterface
         $container->setDefinition('goetas_webservices.xsd2php.naming_convention', $definition);
     }
 
-    protected static function sanitizePhp($ns)
+    protected static function sanitizePhp(string $ns): string
     {
         return strtr($ns, '/', '\\');
     }
@@ -73,7 +73,7 @@ class XMLClientExtension extends Extension implements PrependExtensionInterface
      *
      * @param ContainerBuilder $container
      */
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $container->prependExtensionConfig('nogrod_xml_client', []);
     }

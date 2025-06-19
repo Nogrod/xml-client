@@ -50,6 +50,7 @@ class ClientStubGenerator
         $method = new MethodGenerator('getJmsMetaPath');
         $method->setFlags(MethodGenerator::FLAG_PROTECTED);
         $method->setBody($body);
+        $method->setReturnType('array');
         $classGen->addMethodFromGenerator($method);
     }
 
@@ -65,6 +66,7 @@ class ClientStubGenerator
         $method = new MethodGenerator('getSabre');
         $method->setFlags(MethodGenerator::FLAG_PROTECTED);
         $method->setBody(implode(PHP_EOL, $body));
+        $method->setReturnType('\Sabre\Xml\Service');
         $classGen->addMethodFromGenerator($method);
     }
 
@@ -137,7 +139,7 @@ class ClientStubGenerator
         $classGen->addMethodFromGenerator($method);
     }
 
-    private function getOperationParams(PortType\Operation $operation, MethodGenerator $method)
+    private function getOperationParams(PortType\Operation $operation, MethodGenerator $method): array
     {
         if (!$operation->getInput()) {
             return [];
