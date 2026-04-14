@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class XMLClientExtension extends Extension implements PrependExtensionInterface
 {
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $config = $this->processConfiguration(new Configuration(), $configs);
         foreach ($configs as $subConfig) {
