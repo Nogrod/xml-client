@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class XMLClientExtension extends Extension implements PrependExtensionInterface
 {
@@ -21,8 +21,8 @@ class XMLClientExtension extends Extension implements PrependExtensionInterface
 
         $container->setParameter('nogrod.xml_client.config', $config);
 
-        $xml = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $xml->load('services.xml');
+        $yaml = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $yaml->load('services.yaml');
 
 
         $container->setDefinition('logger', new Definition(NullLogger::class));

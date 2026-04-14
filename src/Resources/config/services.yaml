@@ -1,0 +1,120 @@
+services:
+  goetas_webservices.xsd2php.naming_convention.short:
+    class: GoetasWebservices\Xsd\XsdToPhp\Naming\ShortNamingStrategy
+    public: false
+
+  goetas_webservices.xsd2php.naming_convention.long:
+    class: GoetasWebservices\Xsd\XsdToPhp\Naming\LongNamingStrategy
+    public: false
+
+  goetas_webservices.xml_client.metadata_reader:
+    synthetic: true
+    public: true
+
+  logger:
+    synthetic: true
+    abstract: true
+    public: false
+
+  nogrod.xml_client.stub.client_generator:
+    class: Nogrod\XMLClient\StubGeneration\ClientStubGenerator
+    public: true
+    arguments:
+      - '@goetas_webservices.xsd2php.converter.php'
+      - '@goetas_webservices.xsd2php.naming_convention'
+
+  goetas_webservices.xsd2php.schema_reader:
+    class: GoetasWebservices\XML\XSDReader\SchemaReader
+    public: true
+
+  goetas_webservices.xsd2php.path_generator.php.psr4:
+    class: GoetasWebservices\Xsd\XsdToPhp\Php\PathGenerator\Psr4PathGenerator
+    public: false
+
+  goetas_webservices.xsd2php.path_generator.jms.psr4:
+    class: GoetasWebservices\Xsd\XsdToPhp\Jms\PathGenerator\Psr4PathGenerator
+    public: false
+
+  nogrod.xml_client.stub.class_writer:
+    class: Nogrod\XMLClient\StubGeneration\ClientStubGenerator
+    arguments:
+      - '@goetas_webservices.xsd2php.converter.php'
+      - '@goetas_webservices.xsd2php.naming_convention'
+
+  goetas_webservices.xsd2php.writer.php:
+    class: GoetasWebservices\Xsd\XsdToPhp\Writer\PHPWriter
+    public: true
+    arguments:
+      - '@goetas_webservices.xsd2php.class_writer.php'
+      - '@goetas_webservices.xsd2php.php.class_generator'
+      - '@logger'
+
+  goetas_webservices.xsd2php.class_writer.php:
+    class: GoetasWebservices\Xsd\XsdToPhp\Writer\PHPClassWriter
+    public: true
+    arguments:
+      - '@goetas_webservices.xsd2php.path_generator.php'
+      - '@logger'
+
+  goetas_webservices.xsd2php.php.class_generator:
+    class: GoetasWebservices\Xsd\XsdToPhp\Php\ClassGenerator
+    public: true
+
+  goetas_webservices.xsd2php.writer.jms:
+    class: GoetasWebservices\Xsd\XsdToPhp\Writer\JMSWriter
+    public: true
+    arguments:
+      - '@goetas_webservices.xsd2php.path_generator.jms'
+      - '@logger'
+
+  goetas_webservices.xsd2php.writer.sabre:
+    class: GoetasWebservices\Xsd\XsdToPhp\Writer\SabreWriter
+    public: true
+    arguments:
+      - '@goetas_webservices.xsd2php.path_generator.jms'
+      - '@goetas_webservices.xsd2php.class_writer.php'
+      - '@logger'
+
+  goetas_webservices.wsdl2php.event_dispatcher:
+    class: Symfony\Component\EventDispatcher\EventDispatcher
+    calls:
+      - [addSubscriber, ['@goetas_webservices.wsdl2php.soap_reader']]
+
+  goetas_webservices.wsdl2php.soap_reader:
+    class: GoetasWebservices\XML\SOAPReader\SoapReader
+
+  goetas_webservices.wsdl2php.wsdl_reader:
+    class: GoetasWebservices\XML\WSDLReader\DefinitionsReader
+    public: true
+    arguments:
+      - '@goetas_webservices.xsd2php.schema_reader'
+      - '@goetas_webservices.wsdl2php.event_dispatcher'
+
+  goetas_webservices.wsdl2php.converter.php:
+    class: GoetasWebservices\WsdlToPhp\Generation\PhpSoapConverter
+    public: true
+    arguments:
+      - '@goetas_webservices.xsd2php.converter.php'
+
+  goetas_webservices.wsdl2php.converter.jms:
+    class: GoetasWebservices\WsdlToPhp\Generation\JmsSoapConverter
+    public: true
+    arguments:
+      - '@goetas_webservices.xsd2php.converter.jms'
+
+  goetas_webservices.xsd2php.converter.php:
+    class: GoetasWebservices\Xsd\XsdToPhp\Php\PhpConverter
+    public: true
+    arguments:
+      - '@goetas_webservices.xsd2php.naming_convention'
+    calls:
+      - [setLogger, ['@logger']]
+
+  goetas_webservices.xsd2php.converter.jms:
+    class: GoetasWebservices\Xsd\XsdToPhp\Jms\YamlConverter
+    public: true
+    arguments:
+      - '@goetas_webservices.xsd2php.naming_convention'
+    calls:
+      - [setLogger, ['@logger']]
+

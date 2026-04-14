@@ -18,6 +18,6 @@ use Symfony\Component\Console\Application;
 error_reporting(error_reporting() | E_ALL);
 $cli = new Application('Convert WSDL/XSD definitions to PHP classes Command Line Interface', "1.0");
 $cli->setCatchExceptions(true);
-$cli->add(new Generate());
+$cli->addCommand(new Generate());
 $cli->run();
 

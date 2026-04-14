@@ -8,7 +8,6 @@ use Symfony\Component\Config\Loader\DelegatingLoader;
 use Symfony\Component\Config\Loader\LoaderResolver;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class XMLContainerBuilder
@@ -27,7 +26,7 @@ class XMLContainerBuilder
      * @param null $configFile
      * @param LoggerInterface|null $logger
      */
-    public function __construct($configFile = null, LoggerInterface $logger = null)
+    public function __construct($configFile = null, ?LoggerInterface $logger = null)
     {
         $this->logger = $logger;
         $this->setConfigFile($configFile);
@@ -59,8 +58,7 @@ class XMLContainerBuilder
 
         $locator = new FileLocator('.');
         $loaders = array(
-            new YamlFileLoader($container, $locator),
-            new XmlFileLoader($container, $locator)
+            new YamlFileLoader($container, $locator)
         );
         $delegatingLoader = new DelegatingLoader(new LoaderResolver($loaders));
         $delegatingLoader->load($this->configFile);

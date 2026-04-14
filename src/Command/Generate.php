@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class Generate extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
         $this->setName('generate');
