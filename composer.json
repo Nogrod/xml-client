@@ -14,10 +14,10 @@
   ],
   "require": {
     "php": "^8.0",
-    "nogrod/xml-client-runtime": "^0.4",
-    "symfony/config": "^5.0|^6.0|^7.0|^8.0",
-    "symfony/dependency-injection": "^5.0|^6.0|^7.0|^8.0",
-    "symfony/expression-language": "^5.0|^6.0|^7.0|^8.0",
+    "nogrod/xml-client-runtime": "^0.5",
+    "symfony/config": "^7.0|^8.0",
+    "symfony/dependency-injection": "^7.0|^8.0",
+    "symfony/expression-language": "^7.0|^8.0",
     "goetas-webservices/soap-reader": "dev-master",
     "goetas-webservices/wsdl-reader": "dev-master",
     "goetas-webservices/xsd2php": "dev-master"
