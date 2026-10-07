@@ -14,7 +14,7 @@
   ],
   "require": {
     "php": "^8.0",
-    "nogrod/xml-client-runtime": "^0.5",
+    "nogrod/xml-client-runtime": "^0.6",
     "symfony/config": "^7.0|^8.0",
     "symfony/dependency-injection": "^7.0|^8.0",
     "symfony/expression-language": "^7.0|^8.0",
