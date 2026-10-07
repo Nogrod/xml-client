@@ -36,9 +36,9 @@ class Configuration implements ConfigurationInterface
             ->prototype('scalar')
             ->end()
             ->end()
+            // No longer used: no JMS metadata is written, the generated types serialize
+            // themselves. Still accepted so existing configs keep working.
             ->arrayNode('destinations_jms')->fixXmlConfig('destination_jms')
-            ->cannotBeEmpty()->isRequired()
-            ->requiresAtLeastOneElement()
             ->prototype('scalar')
             ->end()
             ->end()

@@ -36,24 +36,6 @@ class ClientStubGenerator
 		$this->inflector = InflectorFactory::create()->build();
     }
 
-    public static function addJmsMethod(ClassGenerator $classGen, array $jmsPaths)
-    {
-        $body = 'return [' . PHP_EOL;
-        $body .= implode(', ', array_map(
-            function ($v, $k) {
-                return sprintf("    '%s' => __DIR__.'/../../../%s'," . PHP_EOL, $k, $v);
-            },
-            $jmsPaths,
-            array_keys($jmsPaths)
-        ));
-        $body .= '];';
-        $method = new MethodGenerator('getJmsMetaPath');
-        $method->setFlags(MethodGenerator::FLAG_PROTECTED);
-        $method->setBody($body);
-        $method->setReturnType('array');
-        $classGen->addMethodFromGenerator($method);
-    }
-
     public static function addSabreMethod(ClassGenerator $classGen, string $classname)
     {
         $name = substr($classname, 0, -mb_strlen("BaseClient"));
@@ -72,11 +54,10 @@ class ClientStubGenerator
 
     /**
      * @param PortType[] $ports
-     * @param array $jmsPaths
      * @param string $classname
      * @return ClassGenerator[]
      */
-    public function generate(array $ports, array $jmsPaths, string $classname, bool $noSabre = false)
+    public function generate(array $ports, string $classname, bool $noSabre = false)
     {
         $classes = [];
         foreach ($ports as $port) {
@@ -86,7 +67,6 @@ class ClientStubGenerator
                 $namespaces = $this->phpConverter->getNamespaces();
                 $classGen->setNamespaceName($namespaces[$port->getDefinition()->getTargetNamespace()] . "\\Client");
                 $classGen->setExtendedClass(Client::class);
-                self::addJmsMethod($classGen, $jmsPaths);
                 if (!$noSabre) self::addSabreMethod($classGen, $classname);
                 $classes[] = $classGen;
             }
